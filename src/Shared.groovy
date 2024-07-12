@@ -1,6 +1,6 @@
 package ExampleA
 
-void installMaven (String imageName){
+def installMaven (String imageName){
 docker.image(imageName).pull()
 docker.image(imageName).inside(){
 sh "maven clean package"
