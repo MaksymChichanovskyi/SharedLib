@@ -1,4 +1,4 @@
-package installMaven
+package ExampleA
 
 def installMaven (String imageName){
 def imageName = "maven:3.9.8-amazoncorretto-11"
