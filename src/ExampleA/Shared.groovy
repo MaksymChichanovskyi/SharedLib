@@ -13,7 +13,7 @@ package ExampleA
     }
 
     def updatePOMVersion(){
-         def pomXml = new XmlSlurper().parse(pomFile)
+         def pomXml = new XmlSlurper().parse(pom.xml)
          pomXml.version[0].value = buildNumber
          def updatedPomXml = XmlUtil.serialize(pomXml)
          pomFile.write(updatedPomXml)
