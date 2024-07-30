@@ -24,9 +24,9 @@ node(agentName) {
     stage('Checkout') {
         defaultCheckout()
     }
-     stage('Update Version'){
+     /*stage('Update Version'){
       updatePOMVersion()
-     }
+     }*/
     
   stage('Build'){
       startBuild()
