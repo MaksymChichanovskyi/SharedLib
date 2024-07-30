@@ -20,9 +20,10 @@ package ExampleA
     }
 
     def getJarSize() {
-        def jarFile = findFiles(glob: 'target/*.jar')[0]
-        def jarSize = new File(jarFile.path).length()
-        def jarSizeMB = jarSize / (1024 * 1024)
+        def jarFile = jarFiles[0]
+        def file = new File(jarFile.path)
+        def fileSize = file.length() 
+        def fileSizeMB = fileSize / (1024 * 1024) 
         echo "JAR File: ${jarFile.path}, Size: ${jarSizeMB} MB"
     }
 return this
