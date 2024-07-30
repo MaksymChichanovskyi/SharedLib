@@ -12,14 +12,24 @@ package ExampleA
         }
     }
 
-    def updatePOMVersion(){
-         def pomXml = new XmlSlurper().parse(pom.xml)
-         pomXml.version[0].value = env.BUILD_NUMBER
-         def updatedPomXml = XmlUtil.serialize(pomXml)
-         pomFile.write(updatedPomXml)
-         echo "Updated POM version to ${env.BUILD_NUMBER}"
+    def updatePomVersion(String buildNumber) {
+    def pomFilePath = 'pom.xml'
+    if (!fileExists(pomFilePath)) {
+        error "POM file not found: ${pomFilePath}"
     }
+    def pomXml = readFile(pomFilePath)
+    def parsedXml = new XmlSlurper().parseText(pomXml)
+    def versionNode = parsedXml.'**'.find { it.name() == 'version' }
+    if (versionNode) {
+        versionNode.value = env.BUILD_NUMBER
+    } else {
+        error "No <version> element found in the POM file"
+    }
+    def updatedPomXml = XmlUtil.serialize(parsedXml)
+    writeFile(file: pomFilePath, text: updatedPomXml)
 
+    echo "Updated POM version to ${buildNumber}"
+}
 
     def mavenApp(){
         def agentName = 'linux && docker'
