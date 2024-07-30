@@ -1,6 +1,6 @@
 package ExampleA
 
-
+    
     def defaultCheckout() {
         checkout(scm)
     }
@@ -17,6 +17,26 @@ package ExampleA
         def updatedPomFile = pomFile.replaceAll('<version>1.0-SNAPSHOT</version>', "<version>1.0.${buildNumber}</version>")
         writeFile file: 'pom.xml', text: updatedPomFile
         echo "Updated pom.xml with build number: ${buildNumber}"
+    }
+
+    def mavenApp(){
+        def agentName = 'linux && docker'
+        def someText = 'Hello!'
+         
+
+node(agentName) { 
+    stage('Checkout') {
+        defaultCheckout()
+    }
+     stage('Update Version'){
+      updatePomVersion(env.BUILD_NUMBER)
+     }
+    
+  stage('Build'){
+      startBuild()
+    }
+}
+
     }
 
 return this
