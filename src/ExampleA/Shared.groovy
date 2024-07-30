@@ -12,12 +12,15 @@ def startBuild (String imageName = "maven:3.9.8-amazoncorretto-11") {
             sh "mvn clean package"
     }
   }
-}
 
+
+
+
+def mavenApp(){
 def agentName = 'linux && docker'
 def someText = 'Hello!'
-def mavenApp(){
-node(agentName) { //run this part on an agent with label 'linux'
+
+node(agentName) { 
     stage('Checkout') {
       def shared = new Shared()
       shared.defaultCheckout()
@@ -29,6 +32,7 @@ node(agentName) { //run this part on an agent with label 'linux'
       shared.startBuild()
       
     }
+}
 }
 }
 return this 
