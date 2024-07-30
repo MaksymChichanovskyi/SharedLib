@@ -14,10 +14,10 @@ package ExampleA
 
     def updatePOMVersion(){
          def pomXml = new XmlSlurper().parse(pom.xml)
-         pomXml.version[0].value = buildNumber
+         pomXml.version[0].value = env.BUILD_NUMBER
          def updatedPomXml = XmlUtil.serialize(pomXml)
          pomFile.write(updatedPomXml)
-         echo "Updated POM version to ${buildNumber}"
+         echo "Updated POM version to ${env.BUILD_NUMBER}"
     }
 
 
