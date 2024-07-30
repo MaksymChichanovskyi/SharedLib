@@ -15,7 +15,7 @@ def startBuild (String imageName = "maven:3.9.8-amazoncorretto-11") {
             sh "mvn clean package"
     }
 
-def call(String pomFilePath) {
+def updatePom(String pomFilePath) {
     def buildNumber = env.BUILD_NUMBER ?: '1.0-SNAPSHOT'
     
     def pomFile = new File(pomFilePath)
