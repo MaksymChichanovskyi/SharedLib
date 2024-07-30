@@ -6,7 +6,7 @@ def CheckoutGit(){
                                              userRemoteConfigs: [[credentialsId: 'cf84bbaf-792c-4bac-98ae-b80958b2656f', refspec: '+refs/heads/main:refs/remotes/origin/main',
                                              url: 'https://github.com/MaksymChichanovskyi/MavenProject.git']]]
 }
-class UpdatePom {
+def UpdatePom(){
     static void updateVersion(String buildNumber) {
         println "Current Build Number: ${buildNumber}"
 
