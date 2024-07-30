@@ -36,3 +36,4 @@ def mavenApp() {
 
 // Виклик основного методу
 mavenApp()
+return this
