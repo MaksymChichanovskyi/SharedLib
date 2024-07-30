@@ -6,6 +6,27 @@ def CheckoutGit(){
                                              userRemoteConfigs: [[credentialsId: 'cf84bbaf-792c-4bac-98ae-b80958b2656f', refspec: '+refs/heads/main:refs/remotes/origin/main',
                                              url: 'https://github.com/MaksymChichanovskyi/MavenProject.git']]]
 }
+def call() {
+    def buildNumber = env.BUILD_NUMBER
+    echo "Current Build Number: ${buildNumber}"
+
+    def pomFile = new File('pom.xml')
+    if (pomFile.exists()) {
+        def pom = new XmlParser().parse(pomFile)
+        def versionNode = pom.version
+
+        if (versionNode) {
+            def newVersion = "${versionNode.text()}-${buildNumber}"
+            versionNode[0].setValue(newVersion)
+            new XmlNodePrinter(new PrintWriter(new FileWriter(pomFile))).print(pom)
+            echo "Updated version in pom.xml to ${newVersion}"
+        } else {
+            echo "No version node found in pom.xml"
+        }
+    } else {
+        error "pom.xml not found"
+    }
+}
 
 
 
