@@ -14,7 +14,7 @@ package ExampleA
 
     def updatePomVersion(String buildNumber) {
         def pomFile = readFile 'pom.xml'
-        def updatedPomFile = pomFile.replaceAll('<version>1.0-SNAPSHOT</version>', "<version>${buildNumber}</version>")
+        def updatedPomFile = pomFile.replaceAll('<version>1.0-SNAPSHOT</version>', "<version>1.0.${buildNumber}</version>")
         writeFile file: 'pom.xml', text: updatedPomFile
         echo "Updated pom.xml with build number: ${buildNumber}"
     }
