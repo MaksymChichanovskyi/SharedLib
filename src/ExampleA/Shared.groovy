@@ -19,11 +19,4 @@ package ExampleA
         echo "Updated pom.xml with build number: ${buildNumber}"
     }
 
-    def getJarSize() {
-        def jarFile = jarFiles[0]
-        def file = new File(jarFile.path)
-        def fileSize = file.length() 
-        def fileSizeMB = fileSize / (1024 * 1024) 
-        echo "JAR File: ${jarFile.path}, Size: ${jarSizeMB} MB"
-    }
 return this
