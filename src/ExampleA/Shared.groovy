@@ -41,7 +41,7 @@ node(agentName) {
         defaultCheckout()
     }
      stage('Update Version'){
-      updatePOMVersion()
+      updatePomVersion()
      }
     
   stage('Build'){
