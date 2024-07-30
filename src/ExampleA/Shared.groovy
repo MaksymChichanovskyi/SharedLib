@@ -1,7 +1,7 @@
 package ExampleA
 
 // Визначення класу Shared
-class Shared {
+class test {
     // Метод для Checkout
     def defaultCheckout() {
         checkout(scm)
