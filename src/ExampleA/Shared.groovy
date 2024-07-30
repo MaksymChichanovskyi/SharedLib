@@ -16,9 +16,11 @@ def call() {
         def versionNode = pom.version
 
         if (versionNode) {
-            def newVersion = "${versionNode.text()}-${buildNumber}"
-            versionNode[0].setValue(newVersion)
-            new XmlNodePrinter(new PrintWriter(new FileWriter(pomFile))).print(pom)
+            def newVersion = "${buildNumber}"
+            versionNode[0].value = newVersion
+            def writer = new StringWriter()
+            new XmlNodePrinter(new PrintWriter(writer)).print(pom)
+            pomFile.text = XmlUtil.serialize(pom)
             echo "Updated version in pom.xml to ${newVersion}"
         } else {
             echo "No version node found in pom.xml"
@@ -26,6 +28,7 @@ def call() {
     } else {
         error "pom.xml not found"
     }
+}
 }
 
 
