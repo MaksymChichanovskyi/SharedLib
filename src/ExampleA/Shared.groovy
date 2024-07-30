@@ -11,33 +11,6 @@ def CheckoutGit(){
                                              url: 'https://github.com/MaksymChichanovskyi/MavenProject.git']]]
 }
 
-def patchPom(){
-        updatePomVersion(String buildNumber) {
-        def pomFile = new File("pom.xml")
-        
-        if (!pomFile.exists()) {
-            throw new RuntimeException("File pom.xml does not exist.")
-        }
-
-        def pom = new XmlSlurper().parse(pomFile)
-        
-        // Перевіряємо, чи є версія в pom.xml
-        def versionNode = pom.version[0]
-        if (versionNode) {
-            versionNode.replaceBody(buildNumber)
-        } else {
-            throw new RuntimeException("Version node not found in pom.xml.")
-        }
-
-        pomFile.withWriter("UTF-8") { writer ->
-            XmlUtil.serialize(pom, writer)
-        }
-        
-        println "Updated version to ${buildNumber} in pom.xml"
-    }
-        
-}
-
 
 
 
