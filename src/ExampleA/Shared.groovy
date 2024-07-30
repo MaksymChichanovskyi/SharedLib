@@ -1,12 +1,8 @@
 package ExampleA
-def agentName = 'linux && docker'
-def someText = 'Hello!'
 
-
-void mavenApp(){
-           
-def defaultCheckout() 
-{
+void Shared(){
+        
+def defaultCheckout() {
 return checkout(scm)
 }
  
@@ -15,11 +11,16 @@ def startBuild (String imageName = "maven:3.9.8-amazoncorretto-11") {
         docker.image(imageName).inside() {
             sh "mvn clean package"
     }
+  }
 }
+
+def agentName = 'linux && docker'
+def someText = 'Hello!'
+def mavenApp(){
 node(agentName) { //run this part on an agent with label 'linux'
     stage('Checkout') {
-       
-        checkout scm
+      def shared = new Shared()
+      shared.defaultCheckout()
     }
 
     
