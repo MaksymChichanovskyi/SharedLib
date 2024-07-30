@@ -16,24 +16,4 @@ class test {
     }
 }
 
-// Метод для виконання всіх стадій
-def mavenApp() {
-    def agentName = 'linux && docker'
-    def someText = 'Hello!'
-
-    node(agentName) {
-        stage('Checkout') {
-            def shared = new Shared()
-            shared.defaultCheckout()
-        }
-
-        stage('Build') {
-            def shared = new Shared()
-            shared.startBuild()
-        }
-    }
-}
-
-// Виклик основного методу
-mavenApp()
 return this
