@@ -18,7 +18,7 @@ package ExampleA
         error "POM file not found: ${pomFilePath}"
     }
     def pomXml = readFile(pomFilePath)
-    def parsedXml = new XmlSlurper().parseText(pomXml)
+    def parsedXml = new XmlSlurper().parseText(pom.xml)
     def versionNode = parsedXml.'**'.find { it.name() == 'version' }
     if (versionNode) {
         versionNode.value = env.BUILD_NUMBER
@@ -28,7 +28,7 @@ package ExampleA
     def updatedPomXml = XmlUtil.serialize(parsedXml)
     writeFile(file: pomFilePath, text: updatedPomXml)
 
-    echo "Updated POM version to ${buildNumber}"
+    echo "Updated POM version to ${env.buildNumber}"
 }
 
     def mavenApp(){
