@@ -12,7 +12,13 @@ package ExampleA
         }
     }
 
-   
+    def updatePOMVersion(){
+         def pomXml = new XmlSlurper().parse(pomFile)
+         pomXml.version[0].value = buildNumber
+         def updatedPomXml = XmlUtil.serialize(pomXml)
+         pomFile.write(updatedPomXml)
+         echo "Updated POM version to ${buildNumber}"
+    }
 
 
     def mavenApp(){
@@ -24,9 +30,9 @@ node(agentName) {
     stage('Checkout') {
         defaultCheckout()
     }
-     /*stage('Update Version'){
+     stage('Update Version'){
       updatePOMVersion()
-     }*/
+     }
     
   stage('Build'){
       startBuild()
