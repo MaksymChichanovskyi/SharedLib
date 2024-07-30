@@ -60,7 +60,7 @@ node(agentName) {
         defaultCheckout()
     }
      stage('Update Version'){
-      updatePomVersion(env.BUILD_NUMBER)
+      updatePOMVersion()
      }
     
   stage('Build'){
