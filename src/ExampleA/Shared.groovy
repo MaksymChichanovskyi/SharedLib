@@ -15,8 +15,8 @@ def startBuild (String imageName = "maven:3.9.8-amazoncorretto-11") {
             sh "mvn clean package"
     }
 
-def updatePomVersion(String pomFilePath) {
-    def buildNumber = System.getenv('BUILD_NUMBER') ?: '1.0-SNAPSHOT'
+def call(String pomFilePath) {
+    def buildNumber = env.BUILD_NUMBER ?: '1.0-SNAPSHOT'
     
     def pomFile = new File(pomFilePath)
     def pomXml = pomFile.text
@@ -29,8 +29,8 @@ def updatePomVersion(String pomFilePath) {
     def updatedXml = XmlUtil.serialize(xml)
     pomFile.text = updatedXml
     
-    println "Updated <version> to ${buildNumber} in ${pomFilePath}"
-}
+    echo "Updated <version> to ${buildNumber} in ${pomFilePath}"
+   }
 }
 
 
