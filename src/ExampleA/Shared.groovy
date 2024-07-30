@@ -7,7 +7,7 @@ def CheckoutGit(){
                                              url: 'https://github.com/MaksymChichanovskyi/MavenProject.git']]]
 }
 def UpdatePom(){
-    static void updateVersion(String buildNumber) {
+     void updateVersion(String buildNumber) {
         println "Current Build Number: ${buildNumber}"
 
         def pomFile = new File('pom.xml')
