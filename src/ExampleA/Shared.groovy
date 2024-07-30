@@ -1,6 +1,6 @@
 package ExampleA
 
-    
+    import groovy.xml.XmlUtil
     def defaultCheckout() {
         checkout(scm)
     }
