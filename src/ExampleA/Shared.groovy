@@ -1,7 +1,6 @@
 package ExampleA
 
-import groovy.xml.XmlSlurper
-import groovy.xml.XmlUtil
+
 
 
 
