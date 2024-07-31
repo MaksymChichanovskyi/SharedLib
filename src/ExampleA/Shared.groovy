@@ -48,8 +48,8 @@ node(agentName) {
     }
  stage ('Get Size)'{
    getJarSize()       
+     }
+   }
  }
-    }
-    }
 
 return this
