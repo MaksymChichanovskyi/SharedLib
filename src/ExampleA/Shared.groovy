@@ -1,4 +1,4 @@
-package ExampleA
+epackage ExampleA
 import groovy.xml.XmlUtil
 
 
@@ -13,7 +13,7 @@ def updatePomVersion(String buildNumber) {
     def pomFileContent = readFile('pom.xml')
     
     // Використання регулярного виразу для знаходження та заміни версії
-    def updatedPomFileContent = pomFileContent.replaceAll(/<version>\d+\.\d+-SNAPSHOT<\/version>/, "<version>1.0.${buildNumber}</version>")
+    def updatedPomFileContent = pomFileContent.replaceAll(/<version>\d+\.\d+-SNAPSHOT<\/version>/, "<version>1.0.${env.buildNumber}</version>")
     
     // Запис зміненого XML назад у файл
     writeFile(file: 'pom.xml', text: updatedPomFileContent)
