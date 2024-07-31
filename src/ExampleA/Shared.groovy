@@ -35,7 +35,7 @@ node(agentName) {
         defaultCheckout()
     }
     stage ('Update Pom.xml'){
-        updatePomVersion()
+        updatePomVersion(env.BUILD_NUMBER)
     }
 
   stage('Build'){
