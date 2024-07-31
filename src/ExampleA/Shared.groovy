@@ -40,13 +40,15 @@ node(agentName) {
     stage('Checkout') {
         defaultCheckout()
     }
-     stage('Update Version'){
+     /*stage('Update Version'){
       updatePomVersion()
-     }
+     }*/
     
   stage('Build'){
       startBuild()
     }
+    stage ('GetSize')
+    getJarSize()
 }
 
     }
