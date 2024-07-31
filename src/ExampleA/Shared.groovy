@@ -24,6 +24,11 @@ def updatePomVersion(String buildNumber) {
             sh "mvn clean package"
         }
     }
+def getJarSize() {
+    def jarFile = sh(script: "find . -name '*.jar'", returnStdout: true).trim()
+    def jarSize = sh(script: "stat -c%s ${jarFile}", returnStdout: true).trim()
+    return jarSize
+}
 
     def mavenApp(){
         def agentName = 'linux && docker'
@@ -41,6 +46,9 @@ node(agentName) {
   stage('Build'){
       startBuild()
     }
+ stage (Get Size){
+   getJarSize()       
+ }
     }
     }
 
