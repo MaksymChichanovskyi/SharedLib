@@ -9,14 +9,15 @@ import groovy.xml.XmlUtil
 
 
 def updatePomVersion(String buildNumber) {
-    def pomFile = readFile('pom.xml')
-    def parser = new XmlParser()
-    def pomXml = parser.parseText(pomFile)
-    def versionNode = pomXml.version[0]
-    versionNode.value = "1.0.${buildNumber}"
-    def updatedPomFile = XmlUtil.serialize(pomXml)
-    writeFile(file: 'pom.xml', text: updatedPomFile)
-
+    // Читання вмісту файлу pom.xml
+    def pomFileContent = readFile('pom.xml')
+    
+    // Використання регулярного виразу для знаходження та заміни версії
+    def updatedPomFileContent = pomFileContent.replaceAll(/<version>\d+\.\d+-SNAPSHOT<\/version>/, "<version>1.0.${buildNumber}</version>")
+    
+    // Запис зміненого XML назад у файл
+    writeFile(file: 'pom.xml', text: updatedPomFileContent)
+    
     echo "Updated pom.xml with build number: ${buildNumber}"
 }
 
