@@ -3,20 +3,14 @@ package ExampleA
     def defaultCheckout() {
         checkout(scm)
     }
-	def updatePomVersion(String buildNumber) {
+def updatePomVersion(String buildNumber) {
     def pomFileContent = readFile 'pom.xml'
     def pomXml = new XmlSlurper().parseText(pomFileContent)
-
-    def versionNode = pomXml.version
-
-    if (versionNode) {
-        versionNode[0].value = "1.0.${buildNumber}"
-        def updatedXml = XmlUtil.serialize(pomXml)
-        writeFile file: 'pom.xml', text: updatedXml
-        echo "Updated pom.xml with build number: ${buildNumber}"
-    } else {
-        echo "No <version> element found in pom.xml"
-    }
+    def versionNode = pomXml.version[0]
+    versionNode.value = "1.0.${buildNumber}"
+    def updatedXml = XmlUtil.serialize(pomXml)
+    writeFile file: 'pom.xml', text: updatedXml
+    echo "Updated pom.xml with build number: ${buildNumber}"
 }
 
 
