@@ -25,14 +25,13 @@ def updatePomVersion(String buildNumber) {
         }
     }
 def getJarSize() {
-    def jarFile = sh(script: "find . -name '*.jar'", returnStdout: true).trim()
+     def jarFile = sh(script: "ls target/*.jar | head -n 1", returnStdout: true).trim()
     def jarSize = sh(script: "stat -c%s ${jarFile}", returnStdout: true).trim()
-    
+    return jarSize()
 }
 
     def mavenApp(){
         def agentName = 'linux && docker'
-        def someText = 'Hello!'
          
 
 node(agentName) { 
@@ -47,7 +46,8 @@ node(agentName) {
       startBuild()
     }
  stage ('Get Size'){
-   getJarSize()       
+   getJarSize()
+     echo "The size of the JAR file is: ${jarSize} bytes"
           }
        }
     }
