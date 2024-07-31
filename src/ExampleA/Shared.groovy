@@ -24,10 +24,21 @@ def updatePomVersion(String buildNumber) {
             sh "mvn clean package"
         }
     }
-def getJarSize() {
-     def jarFile = sh(script: "ls target/*.jar | head -n 1", returnStdout: true).trim()
-    def jarSize = sh(script: "stat -c%s ${jarFile}", returnStdout: true).trim()
-    return jarSize()
+def getJarSizeFromPom() {
+    def pomFilePath = 'pom.xml'
+    def pomFileContent = readFile pomFilePath
+    def pomXml = new XmlParser().parseText(pomFileContent)
+    def groupId = pomXml.groupId.text()
+    def artifactId = pomXml.artifactId.text()
+    def version = pomXml.version.text()
+    def jarFileName = "${artifactId}-${version}.jar"
+    def jarFilePath = "target/${jarFileName}"
+    if (fileExists(jarFilePath)) {
+        def jarSize = sh(script: "stat -c%s ${jarFilePath}", returnStdout: true).trim()
+        return jarSize
+    } else {
+        error "JAR file ${jarFilePath} not found"
+    }
 }
 
     def mavenApp(){
