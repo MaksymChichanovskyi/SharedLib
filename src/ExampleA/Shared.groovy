@@ -9,11 +9,13 @@ import groovy.xml.XmlUtil
 
 
 def updatePomVersion(String buildNumber) {
-    def pomXml = new XmlSlurper().parse('pom.xml')
-    pomXml.version[0].value = "1.0.${env.BUILD_NUMBER}"
-    def updatedPomFile = groovy.xml.XmlUtil.serialize(pomXml)
-    writeFile(file: 'pom.xml', text: updatedPomFile)
-    echo "Updated pom.xml with build number: ${env.BUILD_NUMBER}"
+    def pomFilePath = 'pom.xml'
+    def pomFileContent = readFile pomFilePath
+    def pomXml = new XmlSlurper().parseText(pomFileContent)
+    pomXml.version[0].replaceBody("1.0.${buildNumber}")
+    def updatedPomFileContent = groovy.xml.XmlUtil.serialize(pomXml)
+    writeFile file: pomFilePath, text: updatedPomFileContent
+    echo "Updated pom.xml with build number: ${buildNumber}"
 }
 
 
