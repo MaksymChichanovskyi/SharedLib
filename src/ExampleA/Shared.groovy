@@ -27,7 +27,7 @@ def updatePomVersion(String buildNumber) {
 def getJarSize() {
     def jarFile = sh(script: "find . -name '*.jar'", returnStdout: true).trim()
     def jarSize = sh(script: "stat -c%s ${jarFile}", returnStdout: true).trim()
-    return jarSize
+    
 }
 
     def mavenApp(){
