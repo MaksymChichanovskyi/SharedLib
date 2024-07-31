@@ -17,12 +17,13 @@ import groovy.xml.XmlUtil
 
 
   def updatePomVersion(String filePath, String newVersion) {
-    def pomFilePath = "/tmp/jenkins/workspace/MavenProject/target/pom.xml"
-    def newVersion = env.BUILD_NUMBER
-    def pomFile = new File(filePath)
-    def xml = new XmlSlurper().parse(pomFile)
-    xml.version = newVersion
-    pomFile.text = xml.toString()
+   def project = new XmlSlurper().parse(new File("/tmp/jenkins/workspace/MavenProject/target/pom.xml"))
+   def version = project.version.toString()
+   def mainversion = version.substring(0, version.indexOf("-SNAPSHOT"))
+   def pomFile = 'pom.xml'
+   def pom = readMavenPom(file: pomFile)
+    pom.version = versionTag // де versionTag - це бажана версія
+writeMavenPom(file: pomFile, model: pom)
  }
     /* def getJarSize() {
     def jarFile = jarFiles[0]
