@@ -28,5 +28,6 @@ node(agentName) {
       startBuild()
     }
     }
+    }
 
 return this
