@@ -12,11 +12,8 @@ package ExampleA
         }
     }
 
-    def updatePomVersion(String buildNumber) {
+    def updatePomVersion(String $buildNumber) {
     def pomFilePath = 'pom.xml'
-    if (!fileExists(pomFilePath)) {
-        error "POM file not found: ${pomFilePath}"
-    }
     def pomXml = readFile(pomFilePath)
     def parsedXml = new XmlSlurper().parseText(pom.xml)
     def versionNode = parsedXml.'**'.find { it.name() == 'version' }
@@ -27,8 +24,6 @@ package ExampleA
     }
     def updatedPomXml = XmlUtil.serialize(parsedXml)
     writeFile(file: pomFilePath, text: updatedPomXml)
-
-    echo "Updated POM version to ${env.buildNumber}"
 }
 
     def mavenApp(){
