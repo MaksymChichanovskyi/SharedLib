@@ -46,9 +46,9 @@ node(agentName) {
   stage('Build'){
       startBuild()
     }
- stage ('Get Size)'{
+ stage ('Get Size'){
    getJarSize()       
           }
-
+       }
     }
 return this
