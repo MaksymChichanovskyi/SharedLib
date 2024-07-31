@@ -7,15 +7,19 @@ import groovy.xml.XmlUtil
     }
 
 
+
 def updatePomVersion(String buildNumber) {
     def pomFile = readFile('pom.xml')
     def parser = new XmlParser()
     def pomXml = parser.parseText(pomFile)
-    pomXml.version[0].value = "1.0.${buildNumber}"
-    def updatedPomFile = groovy.xml.XmlUtil.serialize(pomXml)
+    def versionNode = pomXml.version[0]
+    versionNode.value = "1.0.${buildNumber}"
+    def updatedPomFile = XmlUtil.serialize(pomXml)
     writeFile(file: 'pom.xml', text: updatedPomFile)
+
     echo "Updated pom.xml with build number: ${buildNumber}"
 }
+
 
 
     def startBuild(String imageName = "maven:3.9.8-amazoncorretto-11") {
