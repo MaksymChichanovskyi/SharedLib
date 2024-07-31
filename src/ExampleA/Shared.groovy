@@ -1,5 +1,6 @@
 package ExampleA
 
+import groovy.xml.XmlSlurper
 import groovy.xml.XmlUtil
 
     def defaultCheckout() {
@@ -13,22 +14,24 @@ import groovy.xml.XmlUtil
         }
     }
 
-    /*def updatePomVersion(String $buildNumber) {
-          def pomFilePath = '/tmp/jenkins/workspace/MavenProject/pom.xml'
-          def pomXml = readFile(pomFilePath)
-          def parsedXml = new XmlSlurper(false,false).parseText('pom.xml')
-          parsedXml.version.replaceBody(newVersion)
-          def updatedXml = XmlUtil.serialize(parsedXml)
-           writeFile(file: pomFilePath, text: updatedXml)
-    }*/
-    def getJarSize() {
+
+
+  def updatePomVersion(String filePath, String newVersion) {
+    def pomFilePath = "/tmp/jenkins/workspace/MavenProject/target/pom.xml"
+    def newVersion = env.BUILD_NUMBER
+    def pomFile = new File(filePath)
+    def xml = new XmlSlurper().parse(pomFile)
+    xml.version = newVersion
+    pomFile.text = xml.toString()
+ }
+    /* def getJarSize() {
     def jarFile = jarFiles[0]
     def jarFilePath ='/tmp/jenkins/workspace/MavenProject/target/Education.ExampleA-1.0-SNAPSHOT.jar'
     def process = ['stat', '-c', '%s', jarFilePath].execute()
     def fileSizeBytes = process.text.trim().toLong()
     def fileSizeMB = fileSizeBytes / (1024 * 1024)
     echo "JAR File: ${jarFilePath}, Size: ${fileSizeMB} MB"
-}
+}*/
     
 
     def mavenApp(){
@@ -40,9 +43,9 @@ node(agentName) {
     stage('Checkout') {
         defaultCheckout()
     }
-     /*stage('Update Version'){
+    stage('Update Version'){
       updatePomVersion()
-     }*/
+     }
     
   stage('Build'){
       startBuild()
