@@ -9,18 +9,12 @@ import groovy.xml.XmlUtil
 
 
 def updatePomVersion(String buildNumber) {
-    // Читання вмісту файлу pom.xml
-    def pomFileContent = readFile('pom.xml')
-    
-    // Використання регулярного виразу для знаходження та заміни версії
-    def updatedPomFileContent = pomFileContent.replaceAll(/<version>\d+\.\d+-SNAPSHOT<\/version>/, "<version>1.0.${env.buildNumber}</version>")
-    
-    // Запис зміненого XML назад у файл
-    writeFile(file: 'pom.xml', text: updatedPomFileContent)
-    
+    def pomXml = new XmlSlurper().parse('pom.xml')
+    pomXml.version[0].value = "1.0.${buildNumber}"
+    def updatedPomFile = groovy.xml.XmlUtil.serialize(pomXml)
+    writeFile(file: 'pom.xml', text: updatedPomFile)
     echo "Updated pom.xml with build number: ${buildNumber}"
 }
-
 
 
     def startBuild(String imageName = "maven:3.9.8-amazoncorretto-11") {
