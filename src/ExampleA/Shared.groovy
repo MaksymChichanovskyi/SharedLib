@@ -1,6 +1,6 @@
 package ExampleA
 import groovy.xml.XmlUtil
-import groovy.xml.XmlSlurper
+
 
     def defaultCheckout() {
         checkout(scm)
