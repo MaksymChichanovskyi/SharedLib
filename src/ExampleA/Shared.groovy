@@ -1,6 +1,7 @@
 package ExampleA
 
-    import groovy.xml.XmlUtil
+import groovy.xml.XmlUtil
+
     def defaultCheckout() {
         checkout(scm)
     }
@@ -13,18 +14,14 @@ package ExampleA
     }
 
     def updatePomVersion(String $buildNumber) {
-    def pomFilePath = 'pom.xml'
-    def pomXml = readFile(pomFilePath)
-    def parsedXml = new XmlSlurper().parseText(pom.xml)
-    def versionNode = parsedXml.'**'.find { it.name() == 'version' }
-    if (versionNode) {
-        versionNode.value = env.BUILD_NUMBER
-    } else {
-        error "No <version> element found in the POM file"
+          def pomFilePath = '/tmp/jenkins/workspace/MavenProject/pom.xml'
+          def pomXml = readFile(pomFilePath)
+          def parsedXml = new XmlSlurper(false,fakse).parseText('pom.xml')
+          parsedXml.version.replaceBody(newVersion)
+          def updatedXml = XmlUtil.serialize(parsedXml)
+           writeFile(file: pomFilePath, text: updatedXml)
     }
-    def updatedPomXml = XmlUtil.serialize(parsedXml)
-    writeFile(file: pomFilePath, text: updatedPomXml)
-}
+    
 
     def mavenApp(){
         def agentName = 'linux && docker'
