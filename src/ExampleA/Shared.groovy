@@ -7,7 +7,7 @@ import groovy.xml.XmlUtil
     }
 
 
-
+@NonCPS
 def updatePomVersion(String buildNumber) {
     def pomFilePath = 'pom.xml'
     def pomFileContent = readFile pomFilePath
