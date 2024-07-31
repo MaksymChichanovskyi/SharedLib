@@ -6,7 +6,7 @@ import groovy.xml.XmlUtil
         checkout(scm)
     }
 
-@NonCPS
+
 def updatePomVersion(String buildNumber) {
     def pomFile = readFile('pom.xml')
     def parser = new XmlParser()
