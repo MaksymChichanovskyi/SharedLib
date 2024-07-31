@@ -51,7 +51,7 @@ node(agentName) {
   stage('Build'){
       startBuild()
     }
-    stage ('GetSize')
+    stage ('GetSize'){
     getJarSize()
 }
 
