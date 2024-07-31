@@ -1,16 +1,17 @@
 package ExampleA
 import groovy.xml.XmlUtil
+import groovy.xml.XmlSlurper
 
     def defaultCheckout() {
         checkout(scm)
     }
 def updatePomVersion(String buildNumber) {
-    def pomFileContent = readFile 'pom.xml'
-    def pomXml = new XmlSlurper().parseText(pomFileContent)
-    def versionNode = pomXml.version[0]
-    versionNode.value = "1.0.${buildNumber}"
-    def updatedXml = XmlUtil.serialize(pomXml)
-    writeFile file: 'pom.xml', text: updatedXml
+    def pomFile = readFile('pom.xml')
+    def parser = new XmlSlurper()
+    def pomXml = parser.parseText(pomFile)
+    pomXml.version[0].value = "1.0.${buildNumber}"
+    def updatedPomFile = XmlUtil.serialize(pomXml)
+    writeFile(file: 'pom.xml', text: updatedPomFile)
     echo "Updated pom.xml with build number: ${buildNumber}"
 }
 
