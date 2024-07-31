@@ -24,25 +24,8 @@ def updatePomVersion(String buildNumber) {
             sh "mvn clean package"
         }
     }
-def getJarSizeFromPom() {
-    def pomFilePath = 'pom.xml'
-    def pomFileContent = readFile(pomFilePath)
-    def pomXml = new XmlParser().parseText(pomFileContent)
 
-    def artifactId = pomXml.artifactId.text()
-    def version = pomXml.version.text()
-
-    def jarFileName = "${artifactId}-${version}.jar"
-    def jarFilePath = "target/${jarFileName}"
-
-    if (fileExists(jarFilePath)) {
-        // Ensure to use `sh` step to execute shell commands
-        def jarSize = sh(script: "stat -c%s ${jarFilePath}", returnStdout: true).trim()
-        return jarSize
-    } else {
-        error "JAR file ${jarFilePath} not found"
-    }
-}
+   
     def mavenApp(){
         def agentName = 'linux && docker'
          
@@ -58,10 +41,10 @@ node(agentName) {
   stage('Build'){
       startBuild()
     }
- stage ('Get Size'){
+/* stage ('Get Size'){
    getJarSize()
      echo "The size of the JAR file is: ${jarSize} bytes"
-          }
+          }*/
        }
     }
 return this
