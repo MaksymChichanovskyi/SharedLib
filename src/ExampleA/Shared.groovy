@@ -3,12 +3,20 @@ package ExampleA
     def defaultCheckout() {
         checkout(scm)
     }
-def updatePomVersion(String buildNumber) {
+	def updatePomVersion(String buildNumber) {
             def pomFile = readFile 'pom.xml'
-            def updatedPomFile = pomFile.replaceAll('<version>1.0-SNAPSHOT</version>', "<version>1.0.${env.BUILD_NUMBER}</version>")
-            writeFile file: 'pom.xml', text: updatedPomFile
-            echo "Updated pom.xml with build number: ${env.BUILD_NUMBER}"
-}
+            def pomXml = new XmlSlurper().parse(pomFile)
+			def versionNode = pomXml.version
+			if (versionNode) {
+            versionNode[0].value = "1.0.${buildNumber}"
+			def updatedXml = XmlUtil.serialize(pomXml)
+			pomFile.write(updatedXml)
+			echo "Updated pom.xml with build number: ${buildNumber}"
+		} else {
+			echo "No <version> element found in pom.xml"
+		}
+	
+ }
     def startBuild(String imageName = "maven:3.9.8-amazoncorretto-11") {
         docker.image(imageName).pull()
         docker.image(imageName).inside() {
