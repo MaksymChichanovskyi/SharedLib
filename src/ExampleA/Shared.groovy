@@ -23,7 +23,7 @@ import groovy.xml.XmlUtil
     }*/
     def getJarSize() {
     def jarFile = jarFiles[0]
-    def jarFilePath ='/tmp/jenkins/workspace/MavenProject/target/'
+    def jarFilePath ='/tmp/jenkins/workspace/MavenProject/target/Education.ExampleA-1.0-SNAPSHOT.jar'
     def process = ['stat', '-c', '%s', jarFilePath].execute()
     def fileSizeBytes = process.text.trim().toLong()
     def fileSizeMB = fileSizeBytes / (1024 * 1024)
