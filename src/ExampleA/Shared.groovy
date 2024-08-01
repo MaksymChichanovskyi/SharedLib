@@ -25,22 +25,9 @@ def updatePomVersion(String buildNumber) {
         }
     }
 
-def getArtifactIdAndVersion() {
-         def pomFilePath = 'pom.xml'
-    def pomFileContent = readFile pomFilePath
-    def pomXml = new XmlParser().parseText(pomFileContent)
-    def artifactId = pomXml.'artifactId'.text()
-    def version = pomXml.'version'.text()
-    def jarFileName = "${artifactId}-${version}.jar"
-    def jarFile = new File("target/${jarFileName}")
-
-    if (jarFile.exists()) {
-        def jarSizeBytes = jarFile.size()
-        def jarSizeKB = jarSizeBytes / 1024
-        return [artifactId, version, jarFileName, jarSizeBytes, jarSizeKB]
-    } else {
-        return [artifactId, version, jarFileName, 0, 0]
-    }
+    def getJarSize() {
+    def jarFile = sh(script: 'find target -name "*.jar" -exec du -k {} \\; | awk \'{print $1}\'', returnStdout: true).trim()
+    return jarFile.toInteger()
 }
     
 
@@ -60,9 +47,8 @@ node(agentName) {
       startBuild()
     }
  stage ('Get Size'){
-      def (artifactId, version, jarFileName, jarSizeBytes, jarSizeKB) = getArtifactIdAndVersion()
-            echo " JAR file name: ${jarFileName}, JAR file size: ${jarSizeBytes} bytes, ${jarSizeKB} KB"
-        }
+        def jarSizeKB = getJarSize()
+            echo "JAR file size: ${jarSizeKB} KB" 
       }
     }
 return this
