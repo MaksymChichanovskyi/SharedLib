@@ -42,11 +42,23 @@ node(agentName) {
     }
  stage ('Get Size'){
         script {
-            def jarFile = new File('target/Education.ExampleA')
-            def jarSize = jarFile.size()
-            println "JAR file size: ${jarSize} bytes"
-            def jarSizeKB = jarSize / 1024
-            println "JAR file size: ${jarSizeKB} KB"
+          def pomFile = new File('pom.xml')
+def xml = new XmlSlurper().parse(pomFile)
+
+def artifactId = xml.artifactId.text()
+def version = xml.version.text()
+
+def jarFileName = "${artifactId}-${version}.jar"
+def jarFile = new File("target/${jarFileName}")
+
+if (jarFile.exists()) {
+    def jarSize = jarFile.size()
+    println "JAR file size: ${jarSize} bytes"
+    def jarSizeKB = jarSize / 1024
+    println "JAR file size: ${jarSizeKB} KB"
+} else {
+    println "JAR file not found."
+}
                 }
         }
       }
