@@ -61,7 +61,7 @@ node(agentName) {
     }
  stage ('Get Size'){
       def (artifactId, version, jarFileName, jarSizeBytes, jarSizeKB) = getArtifactIdAndVersion()
-            echo "ArtifactId: ${artifactId}, Version: ${version}, JAR file name: ${jarFileName}, JAR file size: ${jarSizeBytes} bytes, ${jarSizeKB} KB"
+            echo " JAR file name: ${jarFileName}, JAR file size: ${jarSizeBytes} bytes, ${jarSizeKB} KB"
         }
       }
     }
