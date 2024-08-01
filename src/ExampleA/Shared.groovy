@@ -42,7 +42,7 @@ def getArtifactIdAndVersion() {
             return [artifactId, version, jarFileName, 0, 0]
         }
     }
-}
+
 
     def mavenApp(){
         def agentName = 'linux && docker'
