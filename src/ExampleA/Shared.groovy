@@ -26,9 +26,11 @@ def updatePomVersion(String buildNumber) {
     }
 
     def getJarSize(String jarFilePath){
-        def fileSize = new File(jarFilePath).length()
-        def fileSizeMB = fileSize / (1024 * 1024)
-        echo "JAR file size: ${fileSizeMB} MB" 
+        def script """
+            size = sh "stat ${fileName} | awk '{ print $9 }'"
+            mb = 1024 * 1024
+            """
+       }
     }
    
     def mavenApp(){
