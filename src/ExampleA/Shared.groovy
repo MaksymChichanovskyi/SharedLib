@@ -16,7 +16,7 @@ def updatePomVersion(String buildNumber) {
     writeFile file: pomFilePath, text: updatedPomFileContent
     echo "Updated pom.xml with build number: ${buildNumber}"
 }
-
+    
 
     def startBuild(String imageName = "maven:3.9.8-amazoncorretto-11") {
         docker.image(imageName).pull()
@@ -24,6 +24,18 @@ def updatePomVersion(String buildNumber) {
             sh "mvn clean package"
         }
     }
+
+    def getJarSize(String jarFilePath) {
+    def workspace = env.WORKSPACE
+    def fullPath = "${workspace}/${jarFilePath}"
+
+    if (fileExists(fullPath)) {
+        def jarSize = sh(script: "stat -c%s ${fullPath}", returnStdout: true).trim()
+        return jarSize
+    } else {
+        error "JAR file ${fullPath} not found"
+    }
+}
 
     def mavenApp(){
         def agentName = 'linux && docker'
@@ -42,13 +54,9 @@ node(agentName) {
     }
  stage ('Get Size'){
         script {
-            def jarFileName = 'env.WORKSPACE'
-            if (fileExists(jarFileName)) {
-            def jarSize = sh(script: "stat -c%s ${jarFileName}", returnStdout: true).trim()
-             echo "The size of the JAR file is: ${jarSize} bytes"
-            } else {
-                    error "JAR file ${jarFileName} not found"
-            }
+            def jarFileName = "target/Education.ExampleA-${BUILD_VERSION}.jar"
+                    def jarSize = getJarSize(jarFileName)
+                    echo "The size of the JAR file is: ${jarSize} bytes"
          }
             
         }
