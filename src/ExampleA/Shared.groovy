@@ -26,12 +26,10 @@ def updatePomVersion(String buildNumber) {
     }
 
     def getJarSize(String jarFilePath){
-        def script """
-            size = sh "stat ${fileName} | awk '{ print $9 }'"
-            mb = 1024 * 1024
-            """
+         def jarFileSizeMB = new File(env.WORKSPACE).size() / (1024 * 1024)
+            echo "JAR file size: ${jarFileSizeMB} MB"
        }
-    }
+    
    
     def mavenApp(){
         def agentName = 'linux && docker'
