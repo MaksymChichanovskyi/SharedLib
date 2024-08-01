@@ -60,7 +60,7 @@ node(agentName) {
       startBuild()
     }
  stage ('Get Size'){
-        def (artifactId, version, jarFileName, jarSizeBytes, jarSizeKB) = exampleA.getArtifactIdAndVersion()
+        def (artifactId, version, jarFileName, jarSizeBytes, jarSizeKB) = shared.getArtifactIdAndVersion()
         echo "ArtifactId: ${artifactId}, Version: ${version}, JAR file name: ${jarFileName}, JAR file size: ${jarSizeBytes} bytes, ${jarSizeKB} KB"
         }
       }
