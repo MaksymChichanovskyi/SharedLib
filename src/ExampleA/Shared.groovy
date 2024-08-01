@@ -1,4 +1,4 @@
-epackage ExampleA
+package ExampleA
 import groovy.xml.XmlUtil
 
 
