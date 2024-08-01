@@ -27,7 +27,9 @@ def updatePomVersion(String buildNumber) {
 
     def getJarSize() {
     def jarFile = sh(script: 'find target -name "*.jar" -exec du -k {} \\; | awk \'{print $1}\'', returnStdout: true).trim()
-    return jarFile.toInteger()
+     def jarSizeBytes = sh(script: "stat -c%s ${jarFilePath}", returnStdout: true).trim().toLong()
+    def jarSizeKB = jarSizeBytes / 1024.0
+    return jarSizeKB
 }
     
 
