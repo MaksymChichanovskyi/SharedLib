@@ -43,7 +43,7 @@ node(agentName) {
  stage ('Get Size'){
         script {
                     // Assuming your JAR file is named "myapp.jar" and is located in the target directory
-                    def jarSize = new File('target/myapp.jar').size()
+                    def jarSize = new File('target/').size()
                     println "JAR file size: ${jarSize} bytes"
                     // Optionally, you can convert bytes to kilobytes or megabytes
                     def jarSizeKB = jarSize / 1024
