@@ -41,7 +41,14 @@ node(agentName) {
       startBuild()
     }
  stage ('Get Size'){
-        def h
+        script {
+                    // Assuming your JAR file is named "myapp.jar" and is located in the target directory
+                    def jarSize = new File('target/myapp.jar').size()
+                    println "JAR file size: ${jarSize} bytes"
+                    // Optionally, you can convert bytes to kilobytes or megabytes
+                    def jarSizeKB = jarSize / 1024
+                    println "JAR file size: ${jarSizeKB} KB"
+                }
         }
       }
     }
