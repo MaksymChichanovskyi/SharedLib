@@ -43,7 +43,6 @@ def getArtifactIdAndVersion() {
         }
     }
 
-
     def mavenApp(){
         def agentName = 'linux && docker'
          
@@ -60,8 +59,7 @@ node(agentName) {
       startBuild()
     }
  stage ('Get Size'){
-        def (artifactId, version, jarFileName, jarSizeBytes, jarSizeKB) = shared.getArtifactIdAndVersion()
-        echo "ArtifactId: ${artifactId}, Version: ${version}, JAR file name: ${jarFileName}, JAR file size: ${jarSizeBytes} bytes, ${jarSizeKB} KB"
+       getArtifactIdAndVersion()
         }
       }
     }
