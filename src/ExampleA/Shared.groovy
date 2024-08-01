@@ -26,7 +26,7 @@ def updatePomVersion(String buildNumber) {
     }
 
     def getJarSize(String jarFilePath) {
-    def workspace = env.WORKSPACE
+     def workspace = env.WORKSPACE
     def fullPath = "${workspace}/${jarFilePath}"
 
     if (fileExists(fullPath)) {
@@ -36,6 +36,7 @@ def updatePomVersion(String buildNumber) {
         error "JAR file ${fullPath} not found"
     }
 }
+
 
     def mavenApp(){
         def agentName = 'linux && docker'
