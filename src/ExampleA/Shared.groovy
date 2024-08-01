@@ -26,11 +26,11 @@ def updatePomVersion(String buildNumber) {
     }
 
 def getArtifactIdAndVersion() {
-        def pomFilePath = 'pom.xml'
+         def pomFilePath = 'pom.xml'
     def pomFileContent = readFile pomFilePath
     def pomXml = new XmlParser().parseText(pomFileContent)
-    def artifactId = pomXml.project.artifactId.text()
-    def version = pomXml.project.version.text()
+    def artifactId = pomXml.'artifactId'.text()
+    def version = pomXml.'version'.text()
     def jarFileName = "${artifactId}-${version}.jar"
     def jarFile = new File("target/${jarFileName}")
 
@@ -60,9 +60,8 @@ node(agentName) {
       startBuild()
     }
  stage ('Get Size'){
-      def shared = new Shared()
-      def (artifactId, version, jarFileName, jarSizeBytes, jarSizeKB) = shared.getArtifactIdAndVersion()
-      echo "ArtifactId: ${artifactId}, Version: ${version}, JAR file name: ${jarFileName}, JAR file size: ${jarSizeBytes} bytes, ${jarSizeKB} KB"
+      def (artifactId, version, jarFileName, jarSizeBytes, jarSizeKB) = getArtifactIdAndVersion()
+            echo "ArtifactId: ${artifactId}, Version: ${version}, JAR file name: ${jarFileName}, JAR file size: ${jarSizeBytes} bytes, ${jarSizeKB} KB"
         }
       }
     }
