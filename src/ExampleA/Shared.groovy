@@ -5,16 +5,20 @@ import groovy.xml.XmlUtil
 def defaultCheckout() {
         checkout(scm)
     }
+def readPomXml(){
+    def pomFileContent = readFile 'pom.xml'
+    return new XmlParser().parseText(pomFileContent)
+}
 
-
-def updatePomVersion(String buildNumber)
-{
-    def pomFilePath = 'pom.xml'
-    def pomFileContent = readFile pomFilePath
-    def pomXml = new XmlParser().parseText(pomFileContent)
-    pomXml.version[0].value = "1.0.${buildNumber}-SNAPSHOT"
+def savePomXml(def pomXml){
     def updatedPomFileContent = groovy.xml.XmlUtil.serialize(pomXml)
-    writeFile file: pomFilePath, text: updatedPomFileContent
+    writeFile file: 'pom.xml', text: updatedPomFileContent   
+}
+
+
+def updatePomVersion(String buildNumber, def pomXml)
+{
+    pomXml.version[0].value = "1.0.${buildNumber}-SNAPSHOT"
     echo "Updated pom.xml with build number: ${buildNumber}"
 }
     
@@ -26,7 +30,12 @@ def updatePomVersion(String buildNumber)
         sh "mvn clean package"
     }
  }
- 
+
+def getJarPathFromPom(def pomXml){
+         
+}
+
+
 def getJarSize()
  {
     def jarFilePath = sh(script: 'find target -name "*.jar"', returnStdout: true).trim()
@@ -54,8 +63,10 @@ def mavenApp()
         stage('Checkout') {
             defaultCheckout()
         }
+         def pomXml = readPomXml()
         stage('Update Pom.xml'){
-            updatePomVersion(env.BUILD_NUMBER)
+            updatePomVersion(env.BUILD_NUMBER, pomXml)
+            savePomXml(pomXml)
         }
 
         stage('Build'){
