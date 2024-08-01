@@ -42,7 +42,7 @@ node(agentName) {
     }
  stage ('Get Size'){
         script {
-            def jarFile = new File('target/')
+            def jarFile = new File('target/Education.ExampleA')
             def jarSize = jarFile.size()
             println "JAR file size: ${jarSize} bytes"
             def jarSizeKB = jarSize / 1024
