@@ -25,19 +25,6 @@ def updatePomVersion(String buildNumber) {
         }
     }
 
-    def getJarSize(String jarFilePath) {
-     def workspace = env.WORKSPACE
-    def fullPath = "${workspace}/${jarFilePath}"
-
-    if (fileExists(fullPath)) {
-        def jarSize = sh(script: "stat -c%s ${fullPath}", returnStdout: true).trim()
-        return jarSize
-    } else {
-        error "JAR file ${fullPath} not found"
-    }
-}
-
-
     def mavenApp(){
         def agentName = 'linux && docker'
          
@@ -54,12 +41,7 @@ node(agentName) {
       startBuild()
     }
  stage ('Get Size'){
-        script {
-            def jarFileName = "target/Education.ExampleA-${BUILD_VERSION}.jar"
-                    def jarSize = getJarSize(jarFileName)
-                    echo "The size of the JAR file is: ${jarSize} bytes"
-         }
-            
+        def h
         }
       }
     }
