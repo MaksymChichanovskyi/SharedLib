@@ -27,10 +27,13 @@ def updatePomVersion(String buildNumber) {
 
 def getArtifactIdAndVersion() {
         def pomFilePath = 'pom.xml'
-        def pomFileContent = readFile pomFilePath
-        def pomXml = new XmlParser().parseText(pomFileContent)
-        def artifactId = pomXml.project.artifactId.text()
-        def version = pomXml.project.version.text()
+    echo "Reading pom.xml file: ${pomFilePath}"
+    def pomFileContent = readFile pomFilePath
+    echo "pom.xml file contents: ${pomFileContent}"
+    def pomXml = new XmlParser().parseText(pomFileContent)
+    echo "Parsed pom.xml: ${pomXml}"
+    def artifactId = pomXml.project.artifactId.text()
+    def version = pomXml.project.version.text()
         def jarFileName = "${artifactId}-${version}.jar"
         def jarFile = new File("target/${jarFileName}")
 
