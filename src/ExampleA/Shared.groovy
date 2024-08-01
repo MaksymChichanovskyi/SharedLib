@@ -42,7 +42,7 @@ node(agentName) {
     }
  stage ('Get Size'){
         script {
-            def jarFileName = 'target/Education.ExampleA-1.0-SNAPSHOT.jar'
+            def jarFileName = 'target/Education.ExampleA-1.0.${env.BUILD_NUMBER}-SNAPSHOT.jar'
             if (fileExists(jarFileName)) {
             def jarSize = sh(script: "stat -c%s ${jarFileName}", returnStdout: true).trim()
              echo "The size of the JAR file is: ${jarSize} bytes"
