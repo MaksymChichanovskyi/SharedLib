@@ -27,24 +27,22 @@ def updatePomVersion(String buildNumber) {
 
 def getArtifactIdAndVersion() {
         def pomFilePath = 'pom.xml'
-    echo "Reading pom.xml file: ${pomFilePath}"
     def pomFileContent = readFile pomFilePath
-    echo "pom.xml file contents: ${pomFileContent}"
     def pomXml = new XmlParser().parseText(pomFileContent)
-    echo "Parsed pom.xml: ${pomXml}"
     def artifactId = pomXml.project.artifactId.text()
     def version = pomXml.project.version.text()
-        def jarFileName = "${artifactId}-${version}.jar"
-        def jarFile = new File("target/${jarFileName}")
+    def jarFileName = "${artifactId}-${version}.jar"
+    def jarFile = new File("target/${jarFileName}")
 
-        if (jarFile.exists()) {
-            def jarSizeBytes = jarFile.size()
-            def jarSizeKB = jarSizeBytes / 1024
-            return [artifactId, version, jarFileName, jarSizeBytes, jarSizeKB]
-        } else {
-            return [artifactId, version, jarFileName, 0, 0]
-        }
+    if (jarFile.exists()) {
+        def jarSizeBytes = jarFile.size()
+        def jarSizeKB = jarSizeBytes / 1024
+        return [artifactId, version, jarFileName, jarSizeBytes, jarSizeKB]
+    } else {
+        return [artifactId, version, jarFileName, 0, 0]
     }
+}
+    
 
     def mavenApp(){
         def agentName = 'linux && docker'
