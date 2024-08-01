@@ -25,13 +25,17 @@ def updatePomVersion(String buildNumber) {
         }
     }
 
-    def getJarSize() {
-    def jarFile = sh(script: 'find target -name "*.jar" -exec du -k {} \\; | awk \'{print $1}\'', returnStdout: true).trim()
-     def jarSizeBytes = sh(script: "stat -c%s ${jarFilePath}", returnStdout: true).trim().toLong()
-    def jarSizeKB = jarSizeBytes / 1024.0
-    return jarSizeKB
-}
-    
+   def getJarSize() {
+    def jarFilePath = sh(script: 'find target -name "*.jar"', returnStdout: true).trim()
+    if (jarFilePath) {
+        def jarSizeBytes = sh(script: "stat -c%s ${jarFilePath}", returnStdout: true).trim().toLong()
+        def jarSizeKB = jarSizeBytes / 1024.0
+        return jarSizeKB
+    } else {
+        echo "JAR file not found"
+        return 0
+    }
+
 
     def mavenApp(){
         def agentName = 'linux && docker'
