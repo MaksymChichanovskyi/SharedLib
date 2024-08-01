@@ -41,18 +41,17 @@ node(agentName) {
       startBuild()
     }
  stage ('Get Size'){
-  steps {
-                script {
-                    def jarFileName = 'target/Education.ExampleA-1.0-SNAPSHOT.jar'
-                    if (fileExists(jarFileName)) {
-                        def jarSize = sh(script: "stat -c%s ${jarFileName}", returnStdout: true).trim()
-                        echo "The size of the JAR file is: ${jarSize} bytes"
-                    } else {
-                        error "JAR file ${jarFileName} not found"
-                    }
-                }
+        script {
+            def jarFileName = 'target/Education.ExampleA-1.0-SNAPSHOT.jar'
+            if (fileExists(jarFileName)) {
+            def jarSize = sh(script: "stat -c%s ${jarFileName}", returnStdout: true).trim()
+             echo "The size of the JAR file is: ${jarSize} bytes"
+            } else {
+                    error "JAR file ${jarFileName} not found"
             }
-          }
-       }
+         }
+            
+        }
+      }
     }
 return this
