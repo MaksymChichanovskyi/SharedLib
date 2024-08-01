@@ -2,7 +2,7 @@ package ExampleA
 import groovy.xml.XmlUtil
 
 
- def defaultCheckout() {
+def defaultCheckout() {
         checkout(scm)
     }
 
@@ -19,7 +19,7 @@ def updatePomVersion(String buildNumber)
 }
     
 
-    def startBuild(String imageName = "maven:3.9.8-amazoncorretto-11")
+ def startBuild(String imageName = "maven:3.9.8-amazoncorretto-11")
     {
         docker.image(imageName).pull()
         docker.image(imageName).inside() {
@@ -28,7 +28,7 @@ def updatePomVersion(String buildNumber)
  }
  
 def getJarSize()
-{
+ {
     def jarFilePath = sh(script: 'find target -name "*.jar"', returnStdout: true).trim()
     if (jarFilePath)
     {
@@ -46,11 +46,11 @@ def getJarSize()
 
 def mavenApp()
 {
-    def agentName = 'linux && docker'
+  def agentName = 'linux && docker'
 
 
 
-node(agentName) {
+ node(agentName) {
         stage('Checkout') {
             defaultCheckout()
         }
