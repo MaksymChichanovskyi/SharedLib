@@ -25,6 +25,25 @@ def updatePomVersion(String buildNumber) {
         }
     }
 
+def getArtifactIdAndVersion() {
+        def pomFilePath = 'pom.xml'
+        def pomFileContent = readFile pomFilePath
+        def pomXml = new XmlParser().parseText(pomFileContent)
+        def artifactId = pomXml.project.artifactId.text()
+        def version = pomXml.project.version.text()
+        def jarFileName = "${artifactId}-${version}.jar"
+        def jarFile = new File("target/${jarFileName}")
+
+        if (jarFile.exists()) {
+            def jarSizeBytes = jarFile.size()
+            def jarSizeKB = jarSizeBytes / 1024
+            return [artifactId, version, jarFileName, jarSizeBytes, jarSizeKB]
+        } else {
+            return [artifactId, version, jarFileName, 0, 0]
+        }
+    }
+}
+
     def mavenApp(){
         def agentName = 'linux && docker'
          
@@ -41,7 +60,9 @@ node(agentName) {
       startBuild()
     }
  stage ('Get Size'){
-        def jarsize
+        def exampleA = new ExampleA()
+        def (artifactId, version, jarFileName, jarSizeBytes, jarSizeKB) = exampleA.getArtifactIdAndVersion()
+        echo "ArtifactId: ${artifactId}, Version: ${version}, JAR file name: ${jarFileName}, JAR file size: ${jarSizeBytes} bytes, ${jarSizeKB} KB"
         }
       }
     }
