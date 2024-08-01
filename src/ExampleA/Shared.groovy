@@ -25,6 +25,11 @@ def updatePomVersion(String buildNumber) {
         }
     }
 
+    def getJarSize(String jarFilePath){
+        def fileSize = new File(jarFilePath).length()
+        def fileSizeMB = fileSize / (1024 * 1024)
+        echo "JAR file size: ${fileSizeMB} MB" 
+    }
    
     def mavenApp(){
         def agentName = 'linux && docker'
@@ -41,10 +46,10 @@ node(agentName) {
   stage('Build'){
       startBuild()
     }
-/* stage ('Get Size'){
-   getJarSize()
+ stage ('Get Size'){
+   getJarSize(env.WORKSPACE)
      echo "The size of the JAR file is: ${jarSize} bytes"
-          }*/
+          }
        }
     }
 return this
