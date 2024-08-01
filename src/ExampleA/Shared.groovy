@@ -49,6 +49,7 @@ node(agentName) {
  stage ('Get Size'){
         def jarSizeKB = getJarSize()
             echo "JAR file size: ${jarSizeKB} KB" 
-      }
+       }
+     }
     }
 return this
