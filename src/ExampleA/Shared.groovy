@@ -35,6 +35,7 @@ def updatePomVersion(String buildNumber) {
         echo "JAR file not found"
         return 0
     }
+   }
 
 
     def mavenApp(){
