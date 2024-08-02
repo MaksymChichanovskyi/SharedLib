@@ -63,6 +63,7 @@ def mavenApp()
             if (jarSize != null) {
                 def jarSizeKB = jarSize / 1024
                 echo "JAR file size: ${jarSizeKB} KB"
+                echo "JAR file name: ${jarFilePath}"
             }
         }
     }
