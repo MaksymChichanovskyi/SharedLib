@@ -36,6 +36,10 @@ def getJarPathFromPom(def pomXml){
     return jarPath
 }
 
+ def getJarSize(String jarPath) {
+    def jarFile = sh(script: "ls -l ${jarPath} | awk '{print \$4}' ", returnStdout: true).trim()
+    return jarFile.toInteger()
+}
 
 
 
@@ -71,6 +75,8 @@ def mavenApp()
         stage('Get Size'){
             def jarPath = getJarPathFromPom(pomXml)
             echo "jarPath ${jarPath}"
+            def jarSize = getJarSize(jarPath)
+            echo "jarSize: ${jarSize}"
             /*def jarSize = getJarSizeFromPom(pomXml)
             if (jarSize != null) {
                 def jarSizeKB = jarSize / 1024
