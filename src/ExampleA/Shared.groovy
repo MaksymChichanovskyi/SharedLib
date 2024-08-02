@@ -32,22 +32,25 @@ def updatePomVersion(String buildNumber, def pomXml)
  }
 
 def getJarPathFromPom(def pomXml){
-    def artifactId = pomXml['parentElement']['artifactId'].text()
-    def version = pomXml['parentElement']['version'].text()
-    return "target/${artifactId}-${version}.jar"   
+        def artifactId = pomXml.artifactId?.text() ?: 'unknown-artifactId'
+        def version = pomXml.version?.text() ?: 'unknown-version'
+        echo "Artifact ID: ${artifactId}, Version: ${version}"
+        
+        return "target/${artifactId}-${version}.jar"
 }
 
 def getJarSizeFromPom(def pomXml){
      def jarFilePath = getJarPathFromPom(pomXml)
-     def jarFile = new File(jarFilePath)
-      
+        def jarFile = new File(jarFilePath)
+    
         if (jarFile.exists()) {
-        def jarSizeBytes = jarFile.length()
-        def jarSizeKB = jarSizeBytes / 1024
-        return [jarSizeBytes, jarSizeKB]
-    } else {
-        return [0, 0]
-    }   
+            def jarSizeBytes = jarFile.length()
+            def jarSizeKB = jarSizeBytes / 1024
+            return [jarSizeBytes, jarSizeKB]
+        } else {
+            return [0, 0]
+        }
+    }
 }
 
 
@@ -90,11 +93,10 @@ def mavenApp()
         stage('Get Size'){
             /*def jarSizeKB = getJarSize()
             echo "JAR file size: ${jarSizeKB} KB"*/
-    def (SizeBytes, SizeKB) = getJarSizeFromPom(pomXml)
-    def jarFilePath = getJarPathFromPom(pomXml)
-    def (jarSizeBytes, jarSizeKB) = getJarPathFromPom(jarFilePath)
-    echo "JAR file path: ${jarFilePath}"
-    echo "JAR file size: ${jarSizeBytes} bytes (${jarSizeKB} KB)"
+   def (sizeBytes, sizeKB) = mavenHelper.getJarSizeFromPom(pomXml)
+            def jarFilePath = mavenHelper.getJarPathFromPom(pomXml)
+            echo "JAR file path: ${jarFilePath}"
+            echo "JAR file size: ${sizeBytes} bytes (${sizeKB} KB)"
         }
     }
 }
