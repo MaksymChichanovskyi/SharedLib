@@ -33,7 +33,7 @@ def getJarSizeFromPom(def pomXml){
     def jarFiles = findFiles(glob: 'target/*.jar')
     if (jarFiles.size() == 1) {
         def jarFile = jarFiles[0]
-        def jarSize = jarFile.size()
+        def jarSize = jarFile.length
         return jarSize
     } else {
         echo "No JAR file found or multiple JAR files found"
