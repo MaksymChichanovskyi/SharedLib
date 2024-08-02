@@ -32,15 +32,17 @@ def updatePomVersion(String buildNumber, def pomXml)
  }
 
 def getJarPathFromPom(def pomXml){
-        def artifactId = pomXml.artifactId?.text() ?: 'unknown-artifactId'
-        def version = pomXml.version?.text() ?: 'unknown-version'
-        echo "Artifact ID: ${artifactId}, Version: ${version}"
+        def pomXmlStr = groovy.xml.XmlUtil.serialize(pomXml)
+        echo "POM XML Structure: ${pomXmlStr}"
+        def artifactId = pomXml.'**'.find { it.name() == 'artifactId' }?.text() ?: 'unknown-artifactId'
+        def version = pomXml.'**'.find { it.name() == 'version' }?.text() ?: 'unknown-version'
         
+        echo "Artifact ID: ${artifactId}, Version: ${version}"
         return "target/${artifactId}-${version}.jar"
 }
 
 def getJarSizeFromPom(def pomXml){
-     def jarFilePath = getJarPathFromPom(pomXml)
+             def jarFilePath = getJarPathFromPom(pomXml)
         def jarFile = new File(jarFilePath)
     
         if (jarFile.exists()) {
@@ -51,6 +53,7 @@ def getJarSizeFromPom(def pomXml){
             return [0, 0]
         }
     }
+
 }
 
 
@@ -93,8 +96,8 @@ def mavenApp()
         stage('Get Size'){
             /*def jarSizeKB = getJarSize()
             echo "JAR file size: ${jarSizeKB} KB"*/
-   def (sizeBytes, sizeKB) = mavenHelper.getJarSizeFromPom(pomXml)
-            def jarFilePath = mavenHelper.getJarPathFromPom(pomXml)
+   def (sizeBytes, sizeKB) = getJarSizeFromPom(pomXml)
+            def jarFilePath = getJarPathFromPom(pomXml)
             echo "JAR file path: ${jarFilePath}"
             echo "JAR file size: ${sizeBytes} bytes (${sizeKB} KB)"
         }
