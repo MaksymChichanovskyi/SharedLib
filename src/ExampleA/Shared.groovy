@@ -37,7 +37,7 @@ def getJarPathFromPom(def pomXml){
 }
 
  def getJarSize(String jarPath) {
-    def jarFile = sh(script: "ls -l ${jarPath} | awk '{print \$4}' ", returnStdout: true).trim()
+    def jarFile = sh(script: "ls -l ${jarPath} | awk '{print \$5}' ", returnStdout: true).trim()
     return jarFile.toInteger()
 }
 
