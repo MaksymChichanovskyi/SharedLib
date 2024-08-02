@@ -78,16 +78,13 @@ def mavenApp()
         }
     }
         stage('Clean up') {
-            def jarPath = getJarPathFromPom(pomXml)
-            def jarFile = new File(jarPath)
-            if (jarFile.exists()) {
-                jarFile.delete()
+            steps {
+                def pomXml = readMavenPom file: 'pom.xml'
+                def jarPath = pomXml.artifactId + '-' + pomXml.version + '.jar'
+                sh "rm -f ${workspace}/${jarPath}"
                 echo "Deleted jar file: ${jarPath}"
-            }
-            def oldJarPath = jarPath.replace("-${env.BUILD_NUMBER}-SNAPSHOT", "-${env.BUILD_NUMBER-1}-SNAPSHOT")
-            def oldJarFile = new File(oldJarPath)
-            if (oldJarFile.exists()) {
-                oldJarFile.delete()
+                def oldJarPath = jarPath.replace("-${env.BUILD_NUMBER}-SNAPSHOT", "-${env.BUILD_NUMBER-1}-SNAPSHOT")
+                sh "rm -f ${workspace}/${oldJarPath}"
                 echo "Deleted old jar file: ${oldJarPath}"
             }
         }
