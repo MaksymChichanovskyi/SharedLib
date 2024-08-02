@@ -54,7 +54,6 @@ def getJarSizeFromPom(def pomXml){
         }
     }
 
-}
 
 
 /*def getJarSize()
