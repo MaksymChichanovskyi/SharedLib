@@ -29,7 +29,17 @@ def startBuild(String imageName = "maven:3.9.8-amazoncorretto-11")
     }
 }
 
-def getJarSizeFromPom(def pomXml){
+def getJarPathFromPom(def pomXml){
+    def artifactId = pomXml.artifactId[0].text()
+    def version = pomXml.version[0].text()
+    def jarPath = "target/${artifactId}-${version}.jar"
+    return jarPath
+}
+
+
+
+
+/*def getJarSizeFromPom(def pomXml){
     def jarFiles = findFiles(glob: 'target/*.jar')
     if (jarFiles.size() == 1) {
         def jarFile = jarFiles[0]
@@ -39,7 +49,7 @@ def getJarSizeFromPom(def pomXml){
         echo "No JAR file found or multiple JAR files found"
         return null
     }
-}
+}*/
 
 def mavenApp()
 {
@@ -59,10 +69,12 @@ def mavenApp()
             startBuild()
         }
         stage('Get Size'){
-            def jarSize = getJarSizeFromPom(pomXml)
+            def jarPath = getJarPathFromPom(pomXml)
+            echo "jarPath ${jarPath}"
+            /*def jarSize = getJarSizeFromPom(pomXml)
             if (jarSize != null) {
                 def jarSizeKB = jarSize / 1024
-                echo "JAR file size: ${jarSizeKB} KB"
+                echo "JAR file size: ${jarSizeKB} KB"*/
             }
         }
     }
