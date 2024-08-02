@@ -30,33 +30,18 @@ def updatePomVersion(String buildNumber, def pomXml)
         sh "mvn clean package"
     }
  }
-
+/*
 def getJarPathFromPom(def pomXml){
-        def pomXmlStr = groovy.xml.XmlUtil.serialize(pomXml)
-        echo "POM XML Structure: ${pomXmlStr}"
-        def artifactId = pomXml.'**'.find { it.name() == 'artifactId' }?.text() ?: 'unknown-artifactId'
-        def version = pomXml.'**'.find { it.name() == 'version' }?.text() ?: 'unknown-version'
-        
-        echo "Artifact ID: ${artifactId}, Version: ${version}"
-        return "target/${artifactId}-${version}.jar"
+       
 }
 
 def getJarSizeFromPom(def pomXml){
-             def jarFilePath = getJarPathFromPom(pomXml)
-        def jarFile = new File(jarFilePath)
-    
-        if (jarFile.exists()) {
-            def jarSizeBytes = jarFile.length()
-            def jarSizeKB = jarSizeBytes / 1024
-            return [jarSizeBytes, jarSizeKB]
-        } else {
-            return [0, 0]
-        }
-    }
+             
+    }*/
 
 
 
-/*def getJarSize()
+def getJarSize()
  {
     def jarFilePath = sh(script: 'find target -name "*.jar"', returnStdout: true).trim()
     if (jarFilePath)
@@ -70,7 +55,7 @@ def getJarSizeFromPom(def pomXml){
         echo "JAR file not found"
         return 0
     }
-}*/
+}
 
 
 def mavenApp()
@@ -93,12 +78,8 @@ def mavenApp()
             startBuild()
           }
         stage('Get Size'){
-            /*def jarSizeKB = getJarSize()
-            echo "JAR file size: ${jarSizeKB} KB"*/
-   def (sizeBytes, sizeKB) = getJarSizeFromPom(pomXml)
-            def jarFilePath = getJarPathFromPom(pomXml)
-            echo "JAR file path: ${jarFilePath}"
-            echo "JAR file size: ${sizeBytes} bytes (${sizeKB} KB)"
+           def jarSizeKB = getJarSize()
+            echo "JAR file size: ${jarSizeKB} KB"
         }
     }
 }
