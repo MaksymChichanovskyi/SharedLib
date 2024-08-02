@@ -1,11 +1,13 @@
 package ExampleA
 import groovy.xml.XmlUtil
 
-def defaultCheckout() {
+def defaultCheckout() 
+{
     checkout(scm)
 }
 
-def readPomXml(){
+def readPomXml()
+{
     def pomFileContent = readFile 'pom.xml'
     return new XmlParser().parseText(pomFileContent)
 }
@@ -29,31 +31,19 @@ def startBuild(String imageName = "maven:3.9.8-amazoncorretto-11")
     }
 }
 
-def getJarPathFromPom(def pomXml){
+def getJarPathFromPom(def pomXml)
+{
     def artifactId = pomXml.artifactId[0].text()
     def version = pomXml.version[0].text()
     def jarPath = "target/${artifactId}-${version}.jar"
     return jarPath
 }
 
- def getJarSize(String jarPath) {
+ def getJarSize(String jarPath)
+{
     def jarFile = sh(script: "ls -l ${jarPath} | awk '{print \$5}' ", returnStdout: true).trim()
     return jarFile.toInteger()
 }
-
-
-
-/*def getJarSizeFromPom(def pomXml){
-    def jarFiles = findFiles(glob: 'target/*.jar')
-    if (jarFiles.size() == 1) {
-        def jarFile = jarFiles[0]
-        def jarSize = jarFile.length
-        return jarSize
-    } else {
-        echo "No JAR file found or multiple JAR files found"
-        return null
-    }
-}*/
 
 def mavenApp()
 {
@@ -68,7 +58,6 @@ def mavenApp()
             updatePomVersion(env.BUILD_NUMBER, pomXml)
             savePomXml(pomXml)
         }
-
         stage('Build'){
             startBuild()
         }
@@ -77,10 +66,6 @@ def mavenApp()
             echo "jarPath ${jarPath}"
             def jarSize = getJarSize(jarPath)
             echo "jarSize: ${jarSize}"
-            /*def jarSize = getJarSizeFromPom(pomXml)
-            if (jarSize != null) {
-                def jarSizeKB = jarSize / 1024
-                echo "JAR file size: ${jarSizeKB} KB"*/
             }
         }
     }
