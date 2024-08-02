@@ -98,4 +98,6 @@ def mavenApp()
         }
     }
 }
+}
+        
 return this
