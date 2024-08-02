@@ -32,10 +32,9 @@ def updatePomVersion(String buildNumber, def pomXml)
  }
 
 def getJarPathFromPom(def pomXml){
-    echo "POM XML structure: ${groovy.xml.XmlUtil.serialize(pomXml)}"
-    def artifactId = pomXml.artifactId.text()
-    def version = pomXml.version.text()
-    return "targe/${artifactId}-${version}.jar"    
+    def artifactId = pomXml['parentElement']['artifactId'].text()
+    def version = pomXml['parentElement']['version'].text()
+    return "target/${artifactId}-${version}.jar"   
 }
 
 def getJarSizeFromPom(def pomXml){
