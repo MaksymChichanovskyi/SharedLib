@@ -51,23 +51,6 @@ def getJarSizeFromPom(def pomXml){
 }
    
 
-/*def getJarSize()
- {
-    def jarFilePath = sh(script: 'find target -name "*.jar"', returnStdout: true).trim()
-    if (jarFilePath)
-    {
-      def jarSizeBytes = sh(script: "stat -c%s ${jarFilePath}", returnStdout: true).trim().toLong()
-      def jarSizeKB = jarSizeBytes / 1024.0
-      return jarSizeKB
-    }
-    else
-    {
-        echo "JAR file not found"
-        return 0
-    }
-}*/
-
-
 def mavenApp()
 {
   def agentName = 'linux && docker'
@@ -88,13 +71,10 @@ def mavenApp()
             startBuild()
           }
         stage('Get Size'){
-           /*def jarSizeKB = getJarSize()
-            echo "JAR file size: ${jarSizeKB} KB"*/
-           def jarSize = JarSize(pomXml)
-           if (jarSize != null) {
+           def jarSize = getJarSizeFromPom(pomXml)
+           if (jarSize!= null) {
            def jarSizeKB = jarSize / 1024
            echo "JAR file size: ${jarSizeKB} KB"
-           
         }
     }
 }
