@@ -92,8 +92,8 @@ def mavenApp()
            /*def jarSizeKB = getJarSize()
             echo "JAR file size: ${jarSizeKB} KB"*/
 
-                def (sizeBytes, sizeKB) = mavenHelper.getJarSizeFromPom(pomXml)
-            def jarFilePath = mavenHelper.getJarPathFromPom(pomXml)
+                def (sizeBytes, sizeKB) = getJarSizeFromPom(pomXml)
+            def jarFilePath = getJarPathFromPom(pomXml)
             echo "JAR file path: ${jarFilePath}"
             echo "JAR file size: ${sizeBytes} bytes (${sizeKB} KB)"
         }
