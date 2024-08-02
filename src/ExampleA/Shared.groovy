@@ -90,7 +90,7 @@ def mavenApp()
         stage('Get Size'){
            /*def jarSizeKB = getJarSize()
             echo "JAR file size: ${jarSizeKB} KB"*/
-           def jarSize = getJarSize(pomXml)
+           def jarSize = JarSize(pomXml)
            if (jarSize != null) {
            def jarSizeKB = jarSize / 1024
            echo "JAR file size: ${jarSizeKB} KB"
