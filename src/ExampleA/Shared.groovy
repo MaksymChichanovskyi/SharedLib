@@ -37,7 +37,7 @@ def getJarPathFromPom(def pomXml){
     return "targe/${artifactId}-${version}.jar"    
 }
 
-def getJarSizePom(def pomXml){
+def getJarSizeFromPom(def pomXml){
      def jarFilePath = getJarPathFromPom(pomXml)
      def jarFile = new File(jarFilePath)
       
