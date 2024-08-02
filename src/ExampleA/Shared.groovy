@@ -28,13 +28,14 @@ def updatePomVersion(String buildNumber, def pomXml)
         docker.image(imageName).pull()
         docker.image(imageName).inside() {
         sh "mvn clean package"
+        sh "cp target/*.jar ."
     }
  }
 
 def getJarPathFromPom(def pomXml){
     def artifactId = pomXml.artifactId[0].text()
     def version = pomXml.version[0].text()
-    def jarPath = "target/${artifactId}-${version}.jar"
+    def jarPath = "${artifactId}-${version}.jar"
     return jarPath
 }
 
