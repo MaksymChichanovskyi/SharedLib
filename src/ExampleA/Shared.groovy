@@ -49,7 +49,7 @@ def getJarSizePom(def pomXml){
 }
 
 
-def getJarSize()
+/*def getJarSize()
  {
     def jarFilePath = sh(script: 'find target -name "*.jar"', returnStdout: true).trim()
     if (jarFilePath)
@@ -63,7 +63,7 @@ def getJarSize()
         echo "JAR file not found"
         return 0
     }
-}
+}*/
 
 
 def mavenApp()
@@ -89,7 +89,7 @@ def mavenApp()
             /*def jarSizeKB = getJarSize()
             echo "JAR file size: ${jarSizeKB} KB"*/
     def jarFilePath = getJarPathFromPom(pomXml)
-    def (jarSizeBytes, jarSizeKB) = getJarSize(jarFilePath)
+    def (jarSizeBytes, jarSizeKB) = getJarPathFromPom(jarFilePath)
     echo "JAR file path: ${jarFilePath}"
     echo "JAR file size: ${jarSizeBytes} bytes (${jarSizeKB} KB)"
         }
