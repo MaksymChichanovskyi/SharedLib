@@ -45,15 +45,15 @@ def getJarPathFromPom(def pomXml)
     return jarFile.toInteger()
 }
 
-def commitPomXmlChanges() {
+def commitPomXmlChanges(String commitMessage) {
     sh '''
         git config --global user.email "cmaksmim@gmail.com"
         git config --global user.name "Jenkins"
         git add pom.xml
-        git commit -m "Update version on pom.xml "
+        git commit -m "Update version on pom.xml ${commitMessage} "
         git push origin  refs/heads/main
     '''
-    echo "Committed changes to pom.xml "
+    echo "Committed changes to pom.xml with message: ${commitMessage}"
 }
 
 def mavenApp()
