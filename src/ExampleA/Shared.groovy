@@ -48,7 +48,7 @@ def getJarPathFromPom(def pomXml)
 def commitPomXmlChanges(String commitMessage) {
     sh '''
         git config --global user.email "cmaksmim@gmail.com"
-        git config --global user.name "Jenkins"
+        git config --global user.name "MaksymChichanovskyi"
         git add pom.xml
         git commit -m "Update version on pom.xml${commitMessage}"
         git push origin HEAD:refs/heads/$(git rev-parse --abbrev-ref HEAD)
