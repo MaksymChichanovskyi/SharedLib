@@ -65,7 +65,7 @@ def mavenApp()
             def jarPath = getJarPathFromPom(pomXml)
             echo "jarPath ${jarPath}"
             def jarSize = getJarSize(jarPath)
-            echo "jarSize: ${jarSize}KB"
+            echo "jarSize: ${jarSize}"
             }
         }
     }
