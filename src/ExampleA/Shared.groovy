@@ -51,7 +51,7 @@ def commitPomXmlChanges(String commitMessage) {
         git config --global user.name "jenkins"
         git add pom.xml
         git commit -m "Update version on pom.xml${commitMessage}"
-        git push origin HEAD:+refs/heads/main:refs/remotes/origin/main$(git rev-parse --abbrev-ref HEAD)
+        git push origin HEAD:'+refs/heads/main:refs/remotes/origin/main'$(git rev-parse --abbrev-ref HEAD)
     '''
     echo "Committed changes to pom.xml with message: ${commitMessage}"
 }
