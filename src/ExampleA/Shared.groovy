@@ -46,18 +46,16 @@ def getJarPathFromPom(def pomXml)
 }
 
 def commitPomXmlChanges(String commitMessage) {
-    withCredentials([string(credentialsId: 'cf84bbaf-792c-4bac-98ae-b80958b2656f', variable: 'Jenkins')]) {
     sh '''
         git config --global user.email "cmaksmim@gmail.com"
-        git config --global user.name "MaksymChichanovskyi"
+        git config --global user.name "Jenkins"
         git show-ref
-        git init
+       
         git add pom.xml
         git commit -m "Update version on pom.xml${commitMessage}"
         git push origin  refs/remotes/origin/master
     '''
     echo "Committed changes to pom.xml with message: ${commitMessage}"
-}
 }
 
 def mavenApp()
