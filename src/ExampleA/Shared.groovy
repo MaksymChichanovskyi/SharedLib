@@ -45,6 +45,17 @@ def getJarPathFromPom(def pomXml)
     return jarFile.toInteger()
 }
 
+def commitPomXmlChanges(String commitMessage) {
+    sh '''
+        git config --global user.email "cmaksmim@gmail.com"
+        git config --global user.name "Jenkins"
+        git add pom.xml
+        git commit -m "${commitMessage}"
+        git push origin HEAD:refs/heads/$(git rev-parse --abbrev-ref HEAD)
+    '''
+    echo "Committed changes to pom.xml with message: ${commitMessage}"
+}
+
 def mavenApp()
 {
     def agentName = 'linux && docker'
@@ -67,6 +78,9 @@ def mavenApp()
             def jarSize = getJarSize(jarPath)
             echo "jarSize: ${jarSize}"
             }
+        stage ('Commit Update'){
+             commitPomXmlChanges("Update pom.xml with build number: ${env.BUILD_NUMBER}")
+        }
         }
     }
 
