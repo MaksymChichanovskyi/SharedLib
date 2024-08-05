@@ -53,7 +53,7 @@ def commitPomXmlChanges(String commitMessage) {
      
         git add pom.xml
         git commit -m "Update version on pom.xml${commitMessage}"
-        git push origin  main
+        git push origin  refs/heads/main
     '''
     echo "Committed changes to pom.xml with message: ${commitMessage}"
 }
