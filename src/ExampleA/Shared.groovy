@@ -50,6 +50,7 @@ def commitPomXmlChanges(String commitMessage) {
         git config --global user.email "cmaksmim@gmail.com"
         git config --global user.name "MaksymChichanovskyi"
         git show-ref
+        git init
         git add pom.xml
         git commit -m "Update version on pom.xml${commitMessage}"
         git push origin  +refs/remotes/origin/main:refs/remotes/origin/main
