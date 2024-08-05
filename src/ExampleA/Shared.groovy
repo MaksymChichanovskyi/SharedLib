@@ -46,6 +46,7 @@ def getJarPathFromPom(def pomXml)
 }
 
 def commitPomXmlChanges(String commitMessage) {
+    withCredentials([string(credentialsId: 'cf84bbaf-792c-4bac-98ae-b80958b2656f', variable: 'GITHUB_PAT')]) {
     sh '''
         git config --global user.email "cmaksmim@gmail.com"
         git config --global user.name "MaksymChichanovskyi"
