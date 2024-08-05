@@ -58,6 +58,7 @@ def commitPomXmlChanges(String commitMessage) {
     '''
     echo "Committed changes to pom.xml with message: ${commitMessage}"
 }
+}
 
 def mavenApp()
 {
