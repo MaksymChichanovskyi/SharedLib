@@ -80,7 +80,7 @@ def mavenApp()
             echo "jarSize: ${jarSize}"
             }
         stage ('Commit Update'){
-             commitPomXmlChanges("Update pom.xml with build number: ${env.BUILD_NUMBER}")
+             commitPomXmlChanges()
         }
         }
     }
