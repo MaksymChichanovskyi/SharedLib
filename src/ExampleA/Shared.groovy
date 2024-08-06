@@ -52,7 +52,7 @@ def commitPomXmlChanges(String originBranch = "main") {
         git config --global user.name "Jenkins"
         git add pom.xml 
         git commit  -m  " Update version on pom.xml  " 
-        git push origin ${originBranch}
+        git push origin HEAD: main
     '''
     echo "Committed changes to pom.xml with message: "
 }
