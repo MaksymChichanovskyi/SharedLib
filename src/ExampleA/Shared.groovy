@@ -81,7 +81,7 @@ def mavenApp()
             }
         stage('Upload to S3'){
                
- sh "aws s3 cp ${env.WORKSPACE}/.jar s3://devops-engage-test/education/UploadJar/ --recursive"
+ sh "aws s3 cp ${env.WORKSPACE}/target/.jar s3://devops-engage-test/education/UploadJar/ --recursive"
         }
         stage ('Commit Update'){
              //commitPomXmlChanges()
