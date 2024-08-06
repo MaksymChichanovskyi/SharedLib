@@ -49,10 +49,9 @@ def getJarPathFromPom(def pomXml)
         
 def commitPomXmlChanges(String commitMessage, String originBranch = "main") {
     sh '''
-        git status
-        git add . 
-        git commit -a -m "Update version on pom.xml ${commitMessage} "
-        git push origin ${originBranch}
+        git add pom.xml 
+        git commit  -m "Update version on pom.xml ${commitMessage} "
+        git push origin main
     '''
     echo "Committed changes to pom.xml with message: ${commitMessage}"
 }
