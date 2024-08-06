@@ -44,14 +44,14 @@ def getJarPathFromPom(def pomXml)
     def jarFile = sh(script: "ls -l ${jarPath} | awk '{print \$5}' ", returnStdout: true).trim()
     return jarFile.toInteger()
 }
-
-def commitPomXmlChanges(String commitMessage) {
+/*git config --global user.email "cmaksmim@gmail.com"
+        git config --global user.name "Jenkins"*/
+        
+def commitPomXmlChanges(String commitMessage, String originBranch = "main") {
     sh '''
-        git config --global user.email "cmaksmim@gmail.com"
-        git config --global user.name "Jenkins"
         git add pom.xml
         git commit -m "Update version on pom.xml ${commitMessage} "
-        git push origin  refs/heads/main
+        git push --set-upstream origin ${originBranch}
     '''
     echo "Committed changes to pom.xml with message: ${commitMessage}"
 }
