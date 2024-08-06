@@ -47,13 +47,13 @@ def getJarPathFromPom(def pomXml)
 /**/
         
 def commitPomXmlChanges(String originBranch = "main") {
-    sh '''
+    sh """
         git config --global user.email "cmaksmim@gmail.com"
         git config --global user.name "Jenkins"
         git add pom.xml 
         git commit  -m  " Update version on pom.xml  " 
          git push --set-upstream origin ${originBranch}
-    '''
+    """
     echo "Committed changes to pom.xml with message: "
 }
 
