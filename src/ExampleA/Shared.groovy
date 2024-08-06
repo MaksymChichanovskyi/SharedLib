@@ -53,7 +53,7 @@ def commitPomXmlChanges(String commitMessage, String originBranch = "main") {
         git checkout main
         git add pom.xml
         git commit -m "Update version on pom.xml ${commitMessage} "
-        git push --set-upstream origin ${originBranch}
+        git push origin ${originBranch}
     '''
     echo "Committed changes to pom.xml with message: ${commitMessage}"
 }
