@@ -49,7 +49,7 @@ def getJarPathFromPom(def pomXml)
 def commitPomXmlChanges(String originBranch = "main") {
     sh '''
         git config --global user.email "cmaksmim@gmail.com"
-        git config --global user.name "MaksymChichanovskyi"
+        git config --global user.name "Jenkins"
         git add pom.xml 
         git commit  -m  " Update version on pom.xml  " 
         git push origin refs/remotes/origin/main
