@@ -49,10 +49,10 @@ def getJarPathFromPom(def pomXml)
 def commitPomXmlChanges(String originBranch = "main") {
     sh '''
         git config --global user.email "cmaksmim@gmail.com"
-        git config --global user.name "Jenkins"
+        git config --global user.name "MaksymChichanovskyi"
         git add pom.xml 
         git commit  -m  " Update version on pom.xml  " 
-        git push origin HEAD: main
+        git push origin refs/remotes/origin/main
     '''
     echo "Committed changes to pom.xml with message: "
 }
