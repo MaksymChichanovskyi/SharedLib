@@ -80,7 +80,7 @@ def mavenApp()
             echo "jarSize: ${jarSize}"
             }
         stage ('Commit Update'){
-             commitPomXmlChanges()
+             //commitPomXmlChanges()
         }
         }
     }
