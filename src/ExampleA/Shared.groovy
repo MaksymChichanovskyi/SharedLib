@@ -48,10 +48,11 @@ def getJarPathFromPom(def pomXml)
         git config --global user.name "Jenkins"*/
         
 def commitPomXmlChanges(String commitMessage, String originBranch = "main") {
+    def commitMessage = " Update version on pom.xml  "
     sh '''
         git add pom.xml 
-        git commit  -m "Update version on pom.xml ${commitMessage} "
-        git push origin main
+        git commit  -m  ${commitMessage}
+        git push origin ${originBranch}
     '''
     echo "Committed changes to pom.xml with message: ${commitMessage}"
 }
