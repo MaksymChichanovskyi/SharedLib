@@ -88,7 +88,7 @@ def mavenApp()
             }
         stage('Upload to S3'){
                
-aws s3 cp "${env.WORKSPACE}/target/${jarFileName}" "s3://${s3Bucket}/${s3Path}"
+sh "aws s3 cp "${env.WORKSPACE}/target/${jarFileName} "s3://${s3Bucket}/${s3Path}""
         }
         stage ('Commit Update'){
              //commitPomXmlChanges()
