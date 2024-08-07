@@ -57,6 +57,13 @@ def commitPomXmlChanges(String originBranch = "main") {
     echo "Committed changes to pom.xml with message: "
 }
 
+def uploadJaroS3(jarPath){
+    def jarFileName = "Education.ExampleA-1.0.${env.BUILD_NUMBER}-SNAPSHOT.jar"
+                    def jarFilePath = "${env.WORKSPACE}/target/${jarFileName}"
+                    def s3Bucket = "devops-engage-test"
+                    def s3Path = "devops-engage-test/education/UploadJar/"
+}
+
 def mavenApp()
 {
     def agentName = 'linux && docker'
@@ -81,7 +88,7 @@ def mavenApp()
             }
         stage('Upload to S3'){
                
- sh "aws s3 cp ${env.WORKSPACE}/target/Education.ExampleA-1.0.85-SNAPSHOT.jar s3://devops-engage-test/education/UploadJar/ --recursive"
+aws s3 cp "${env.WORKSPACE}/target/${jarFileName}" "s3://${s3Bucket}/${s3Path}"
         }
         stage ('Commit Update'){
              //commitPomXmlChanges()
