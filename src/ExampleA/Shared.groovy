@@ -79,9 +79,8 @@ def mavenApp()
             def jarSize = getJarSize(jarPath)
             echo "jarSize: ${jarSize}"
             }
-        stage('Upload to S3'){
-               
-sh "aws s3 cp ${env.WORKSPACE}/target/*jar s3://devops-engage-test/education/UploadJar/ "
+        stage('Upload to S3'){    
+        sh "aws s3 cp ${env.WORKSPACE}/target/*jar s3://devops-engage-test/education/UploadJar/ "
         }
         stage ('Commit Update'){
              //commitPomXmlChanges()
