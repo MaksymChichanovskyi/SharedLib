@@ -81,7 +81,7 @@ def mavenApp()
             }
         stage('Upload to S3'){
                
-sh "aws s3 cp ./target/.jar s3://devops-engage-test/education/UploadJar/ "
+sh "aws s3 cp /tmp/jenkins/workspace/MavenApp s3://devops-engage-test/education/UploadJar/ "
         }
         stage ('Commit Update'){
              //commitPomXmlChanges()
