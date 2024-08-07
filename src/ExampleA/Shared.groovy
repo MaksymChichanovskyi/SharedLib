@@ -44,7 +44,6 @@ def getJarPathFromPom(def pomXml)
     def jarFile = sh(script: "ls -l ${jarPath} | awk '{print \$5}' ", returnStdout: true).trim()
     return jarFile.toInteger()
 }
-/**/
         
 def commitPomXmlChanges(String originBranch = "main") {
     sh """
